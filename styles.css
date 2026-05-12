@@ -1,0 +1,650 @@
+:root {
+  color-scheme: light;
+  --bg: #f5f7fa;
+  --surface: #ffffff;
+  --surface-soft: #eef4f2;
+  --ink: #1f2528;
+  --muted: #66727a;
+  --line: #d8e0e4;
+  --accent: #1d7a6b;
+  --accent-dark: #14574d;
+  --blue: #376fbc;
+  --amber: #c0841a;
+  --red: #c24755;
+  --green: #287a4b;
+  --shadow: 0 18px 45px rgba(31, 37, 40, 0.08);
+  --radius: 8px;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button,
+.file-button,
+.file-drop {
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+  font-weight: 700;
+  min-height: 40px;
+  transition: transform 0.16s ease, background 0.16s ease, border-color 0.16s ease;
+}
+
+button:hover,
+.file-button:hover,
+.file-drop:hover {
+  background: var(--accent-dark);
+  transform: translateY(-1px);
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+.file-button:focus-within,
+.file-drop:focus-within {
+  outline: 3px solid rgba(55, 111, 188, 0.28);
+  outline-offset: 2px;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #fff;
+  color: var(--ink);
+  min-height: 40px;
+  padding: 0.64rem 0.75rem;
+}
+
+textarea {
+  resize: vertical;
+  line-height: 1.5;
+}
+
+label {
+  display: grid;
+  gap: 0.38rem;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.app-shell {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 1.35rem;
+  background: #22312f;
+  color: #f7fbfa;
+}
+
+.brand h1 {
+  margin: 0;
+  font-size: clamp(1.8rem, 4vw, 2.35rem);
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.eyebrow {
+  margin: 0 0 0.45rem;
+  color: currentColor;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  opacity: 0.72;
+  text-transform: uppercase;
+}
+
+.sidebar-section,
+.mini-stats {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.collector-row {
+  display: grid;
+  grid-template-columns: 1fr 42px;
+  gap: 0.55rem;
+}
+
+.inline-form {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.55rem;
+}
+
+.inline-form button {
+  padding: 0 0.85rem;
+}
+
+.side-tabs {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.tab-button {
+  width: 100%;
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.15);
+  color: #f7fbfa;
+  text-align: left;
+  padding: 0.72rem 0.85rem;
+}
+
+.tab-button:hover,
+.tab-button.active {
+  background: #f7fbfa;
+  color: #22312f;
+}
+
+.mini-stat {
+  display: grid;
+  gap: 0.12rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  padding-top: 0.8rem;
+}
+
+.mini-stat strong {
+  font-size: 1.55rem;
+}
+
+.workspace {
+  min-width: 0;
+  padding: 1.35rem;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.topbar h2 {
+  margin: 0;
+  font-size: clamp(1.55rem, 3vw, 2.2rem);
+  letter-spacing: 0;
+}
+
+.top-actions,
+.list-actions,
+.packet-actions,
+.trade-toolbar {
+  display: flex;
+  align-items: end;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.top-actions button,
+.top-actions .file-button,
+.list-actions button,
+.trade-toolbar button,
+.packet-actions button {
+  padding: 0 0.9rem;
+}
+
+.secondary {
+  background: #fff;
+  border-color: var(--line);
+  color: var(--ink);
+}
+
+.secondary:hover {
+  background: #eef4f2;
+}
+
+.danger,
+.danger-button {
+  background: var(--red);
+}
+
+.danger:hover,
+.danger-button:hover {
+  background: #9f3542;
+}
+
+.icon-button {
+  display: inline-grid;
+  place-items: center;
+  padding: 0;
+}
+
+.file-button,
+.file-drop {
+  display: inline-grid;
+  place-items: center;
+  padding: 0 0.9rem;
+  min-width: fit-content;
+}
+
+.file-button input,
+.file-drop input {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.metric-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1rem;
+  box-shadow: var(--shadow);
+}
+
+.metric-card span {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.metric-card strong {
+  display: block;
+  margin-top: 0.3rem;
+  font-size: clamp(1.65rem, 4vw, 2.45rem);
+  line-height: 1;
+}
+
+.view {
+  display: none;
+}
+
+.view.active {
+  display: block;
+}
+
+.packet-panel,
+.controlbar,
+.trade-toolbar,
+.data-panel,
+.trade-column {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.packet-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1rem;
+  align-items: end;
+  padding: 1rem;
+  margin-bottom: 0.85rem;
+}
+
+.controlbar {
+  display: grid;
+  grid-template-columns: minmax(220px, 1.8fr) repeat(3, minmax(150px, 1fr));
+  gap: 0.8rem;
+  padding: 1rem;
+  margin-bottom: 0.85rem;
+}
+
+.list-actions {
+  margin-bottom: 0.85rem;
+}
+
+.selection-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
+  gap: 0.5rem;
+  margin-bottom: 0.85rem;
+}
+
+.selection-summary[hidden] {
+  display: none;
+}
+
+.selection-chip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem;
+  min-height: 44px;
+  border-color: var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  padding: 0.55rem 0.68rem;
+  text-align: left;
+}
+
+.selection-chip:hover,
+.selection-chip.active {
+  background: #22312f;
+  border-color: #22312f;
+  color: #fff;
+}
+
+.selection-chip span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.selection-chip strong {
+  color: var(--accent);
+  font-size: 0.78rem;
+  white-space: nowrap;
+}
+
+.selection-chip:hover strong,
+.selection-chip.active strong {
+  color: #fff;
+}
+
+.table-wrap {
+  overflow: auto;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.stickers-table {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: collapse;
+}
+
+.stickers-table th,
+.stickers-table td {
+  border-bottom: 1px solid var(--line);
+  padding: 0.72rem 0.8rem;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.stickers-table th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: #f0f5f4;
+  color: var(--muted);
+  font-size: 0.76rem;
+  text-transform: uppercase;
+}
+
+.stickers-table tbody tr:hover {
+  background: #f9fbfb;
+}
+
+.section-row th {
+  background: #e7efed;
+  color: var(--ink);
+  font-size: 0.82rem;
+  text-transform: none;
+}
+
+.section-row th {
+  position: sticky;
+  top: 42px;
+  z-index: 1;
+}
+
+.section-row th,
+.section-row th span {
+  font-weight: 850;
+}
+
+.section-row th small {
+  margin-left: 0.55rem;
+  color: var(--muted);
+  font-size: 0.76rem;
+}
+
+.section-row:hover th {
+  background: #e7efed;
+}
+
+.sticker-main {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.sticker-main strong {
+  font-size: 0.98rem;
+}
+
+.sticker-main span {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 82px;
+  border-radius: 999px;
+  padding: 0.28rem 0.62rem;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.status-missing {
+  background: rgba(194, 71, 85, 0.12);
+  color: var(--red);
+}
+
+.status-owned {
+  background: rgba(40, 122, 75, 0.13);
+  color: var(--green);
+}
+
+.status-duplicate {
+  background: rgba(192, 132, 26, 0.15);
+  color: var(--amber);
+}
+
+.row-actions {
+  display: inline-grid;
+  grid-template-columns: 34px 34px;
+  gap: 0.38rem;
+}
+
+.row-actions button {
+  min-height: 34px;
+}
+
+.empty-state {
+  margin: 0;
+  padding: 2rem;
+  color: var(--muted);
+  text-align: center;
+}
+
+.trade-toolbar {
+  justify-content: space-between;
+  padding: 1rem;
+  margin-bottom: 0.85rem;
+}
+
+.trade-toolbar label {
+  min-width: min(320px, 100%);
+}
+
+.trade-grid,
+.data-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+.trade-column,
+.data-panel {
+  padding: 1rem;
+}
+
+.section-title h3 {
+  margin: 0 0 0.85rem;
+  font-size: 1.05rem;
+}
+
+.sticker-list {
+  display: grid;
+  gap: 0.48rem;
+}
+
+.sticker-chip {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 0.62rem 0.72rem;
+  background: #fbfcfc;
+}
+
+.sticker-chip strong {
+  white-space: nowrap;
+}
+
+.sticker-chip span {
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+
+.data-panel {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.format-line {
+  margin: 0;
+  color: var(--muted);
+  font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+  font-size: 0.9rem;
+}
+
+.toast {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 10;
+  max-width: min(420px, calc(100vw - 2rem));
+  transform: translateY(24px);
+  border-radius: var(--radius);
+  background: #1f2528;
+  color: #fff;
+  padding: 0.78rem 0.95rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+.toast.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+@media (max-width: 1020px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    position: static;
+  }
+
+  .side-tabs {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .tab-button {
+    text-align: center;
+  }
+
+  .metrics,
+  .controlbar,
+  .trade-grid,
+  .data-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 680px) {
+  .workspace,
+  .sidebar {
+    padding: 1rem;
+  }
+
+  .topbar,
+  .packet-panel,
+  .trade-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .topbar,
+  .packet-panel {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .top-actions,
+  .packet-actions,
+  .list-actions,
+  .trade-toolbar {
+    align-items: stretch;
+  }
+
+  .top-actions button,
+  .top-actions .file-button,
+  .packet-actions button,
+  .list-actions button,
+  .trade-toolbar button {
+    width: 100%;
+  }
+
+  .metrics,
+  .controlbar,
+  .trade-grid,
+  .data-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .inline-form {
+    grid-template-columns: 1fr;
+  }
+}

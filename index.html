@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="pt-PT">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>WorldTracker2026</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Painel lateral">
+        <div class="brand">
+          <p class="eyebrow">Caderneta partilhavel</p>
+          <h1>WorldTracker2026</h1>
+        </div>
+
+        <section class="sidebar-section">
+          <label for="collectorSelect">Colecionador</label>
+          <div class="collector-row">
+            <select id="collectorSelect"></select>
+            <button class="icon-button danger" id="deleteCollectorButton" type="button" title="Remover colecionador" aria-label="Remover colecionador">x</button>
+          </div>
+          <form class="inline-form" id="collectorForm">
+            <input id="collectorName" type="text" autocomplete="off" placeholder="Novo nome" />
+            <button type="submit">Adicionar</button>
+          </form>
+        </section>
+
+        <nav class="side-tabs" aria-label="Areas da app">
+          <button class="tab-button active" type="button" data-view="albumView">Caderneta</button>
+          <button class="tab-button" type="button" data-view="tradesView">Trocas</button>
+          <button class="tab-button" type="button" data-view="dataView">Dados</button>
+        </nav>
+
+        <section class="mini-stats" id="miniStats" aria-live="polite"></section>
+      </aside>
+
+      <main class="workspace">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow" id="activeCollectorEyebrow">Perfil ativo</p>
+            <h2 id="viewTitle">Caderneta</h2>
+          </div>
+          <div class="top-actions">
+            <button id="exportBackupButton" type="button">Exportar backup</button>
+            <label class="file-button">
+              Importar backup
+              <input id="backupInput" type="file" accept="application/json,.json" />
+            </label>
+          </div>
+        </header>
+
+        <section class="metrics" id="metrics" aria-live="polite"></section>
+
+        <section class="view active" id="albumView" aria-labelledby="viewTitle">
+          <form class="packet-panel" id="packetForm">
+            <div class="packet-input">
+              <label for="packetInput">Cromos do pacote</label>
+              <textarea id="packetInput" rows="2" placeholder="001, 014, 100-106"></textarea>
+            </div>
+            <div class="packet-actions">
+              <button type="submit">Adicionar</button>
+              <button id="removeCodesButton" type="button" class="secondary">Remover</button>
+            </div>
+          </form>
+
+          <div class="controlbar">
+            <label class="search-field" for="searchInput">
+              <span>Pesquisar</span>
+              <input id="searchInput" type="search" autocomplete="off" placeholder="Numero, nome ou selecao" />
+            </label>
+            <label>
+              <span>Selecao</span>
+              <select id="sectionFilter"></select>
+            </label>
+            <label>
+              <span>Estado</span>
+              <select id="statusFilter">
+                <option value="all">Todos</option>
+                <option value="missing">Faltam</option>
+                <option value="owned">Tenho</option>
+                <option value="duplicate">Repetidos</option>
+              </select>
+            </label>
+            <label>
+              <span>Ordem</span>
+              <select id="sortSelect">
+                <option value="section">Selecao</option>
+                <option value="code">Numero</option>
+                <option value="name">Nome</option>
+                <option value="quantity">Quantidade</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="selection-summary" id="selectionSummary" aria-label="Resumo por selecao"></div>
+
+          <div class="list-actions">
+            <button id="copyMissingButton" type="button" class="secondary">Copiar faltas</button>
+            <button id="copyDuplicatesButton" type="button" class="secondary">Copiar repetidos</button>
+          </div>
+
+          <div class="table-wrap">
+            <table class="stickers-table">
+              <thead>
+                <tr>
+                  <th scope="col">Cromo</th>
+                  <th scope="col">Selecao</th>
+                  <th scope="col">Estado</th>
+                  <th scope="col">Qtd</th>
+                  <th scope="col">Acoes</th>
+                </tr>
+              </thead>
+              <tbody id="stickersBody"></tbody>
+            </table>
+            <p class="empty-state" id="emptyState" hidden>Nenhum cromo encontrado.</p>
+          </div>
+        </section>
+
+        <section class="view" id="tradesView" aria-labelledby="viewTitle">
+          <div class="trade-toolbar">
+            <label for="tradePeerSelect">
+              <span>Comparar com</span>
+              <select id="tradePeerSelect"></select>
+            </label>
+            <button id="copyTradeButton" type="button">Copiar proposta</button>
+          </div>
+
+          <div class="trade-grid">
+            <section class="trade-column">
+              <div class="section-title">
+                <p class="eyebrow">Para dar</p>
+                <h3 id="giveTitle">Repetidos que faltam ao outro</h3>
+              </div>
+              <div class="sticker-list" id="giveList"></div>
+            </section>
+            <section class="trade-column">
+              <div class="section-title">
+                <p class="eyebrow">Para pedir</p>
+                <h3 id="requestTitle">Repetidos que te faltam</h3>
+              </div>
+              <div class="sticker-list" id="requestList"></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" id="dataView" aria-labelledby="viewTitle">
+          <div class="data-grid">
+            <form class="data-panel" id="stickerForm">
+              <div class="section-title">
+                <p class="eyebrow">Checklist</p>
+                <h3>Adicionar ou editar cromo</h3>
+              </div>
+              <label for="stickerCode">Numero</label>
+              <input id="stickerCode" type="text" autocomplete="off" placeholder="001" required />
+              <label for="stickerSection">Selecao ou area</label>
+              <input id="stickerSection" type="text" autocomplete="off" placeholder="Portugal" required />
+              <label for="stickerName">Nome</label>
+              <input id="stickerName" type="text" autocomplete="off" placeholder="Nome do cromo" required />
+              <button type="submit">Guardar cromo</button>
+            </form>
+
+            <form class="data-panel" id="generateForm">
+              <div class="section-title">
+                <p class="eyebrow">Base</p>
+                <h3>Gerar caderneta numerica</h3>
+              </div>
+              <label for="totalStickers">Total de cromos</label>
+              <input id="totalStickers" type="number" min="1" max="2000" value="980" />
+              <button type="submit">Gerar lista</button>
+            </form>
+
+            <section class="data-panel">
+              <div class="section-title">
+                <p class="eyebrow">CSV</p>
+                <h3>Importar checklist</h3>
+              </div>
+              <label class="file-drop">
+                <span>Escolher CSV</span>
+                <input id="checklistInput" type="file" accept=".csv,text/csv" />
+              </label>
+              <p class="format-line">code,section,name</p>
+            </section>
+
+            <section class="data-panel">
+              <div class="section-title">
+                <p class="eyebrow">Arquivo</p>
+                <h3>Backup da colecao</h3>
+              </div>
+              <button id="exportDataButton" type="button">Exportar dados</button>
+              <label class="file-drop">
+                <span>Importar dados</span>
+                <input id="importDataInput" type="file" accept="application/json,.json" />
+              </label>
+              <button id="resetButton" type="button" class="danger-button">Repor exemplo</button>
+            </section>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="app.js" defer></script>
+  </body>
+</html>
