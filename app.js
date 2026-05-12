@@ -438,13 +438,13 @@ function renderCollectors() {
 function renderMetrics() {
   const stats = computeStats();
   const metricItems = [
-    ["Completos", `${stats.progress}%`],
-    ["Tenho", `${stats.collected}/${stats.total}`],
-    ["Faltam", String(stats.missing)],
-    ["Repetidos", String(stats.duplicateUnits)],
+    ["Completos", `${stats.progress}%`, "metric-progress"],
+    ["Tenho", `${stats.collected}/${stats.total}`, "metric-owned"],
+    ["Faltam", String(stats.missing), "metric-missing"],
+    ["Repetidos", String(stats.duplicateUnits), "metric-duplicates"],
   ];
   els.metrics.innerHTML = metricItems
-    .map(([label, value]) => `<article class="metric-card"><span>${label}</span><strong>${value}</strong></article>`)
+    .map(([label, value, className]) => `<article class="metric-card ${className}"><span>${label}</span><strong>${value}</strong></article>`)
     .join("");
 
   els.miniStats.innerHTML = `
